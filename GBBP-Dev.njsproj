@@ -60,25 +60,6 @@
     <Content Include="src\images\QR1.png" />
     <Content Include="src\images\QR2.png" />
     <Content Include="src\images\QR3.png" />
-    <Content Include="src\pages\charts\Charts.tsx" />
-    <Content Include="src\pages\charts\components\ApexHeatmap.tsx" />
-    <Content Include="src\pages\charts\components\ApexLineChart.tsx" />
-    <Content Include="src\pages\dashboard\components\BigStat\BigStat.tsx" />
-    <Content Include="src\pages\dashboard\components\BigStat\styles.js" />
-    <Content Include="src\pages\dashboard\Dashboard.tsx" />
-    <Content Include="src\pages\dashboard\mock.js" />
-    <Content Include="src\pages\dashboard\package.json" />
-    <Content Include="src\pages\dashboard\styles.js" />
-    <Content Include="src\pages\icons\Icons.tsx" />
-    <Content Include="src\pages\icons\styles.js" />
-    <Content Include="src\pages\leaderboard\LeaderBoard.tsx" />
-    <Content Include="src\pages\notifications\Notifications.tsx" />
-    <Content Include="src\pages\notifications\NotificationsContainer.tsx" />
-    <Content Include="src\pages\notifications\NotificationsView.tsx" />
-    <Content Include="src\pages\notifications\styles.js" />
-    <Content Include="src\pages\tables\Tables.tsx" />
-    <Content Include="src\pages\typography\styles.js" />
-    <Content Include="src\pages\typography\Typography.tsx" />
     <Content Include="webpack-config.js">
       <SubType>Code</SubType>
     </Content>
@@ -109,27 +90,15 @@
     <Folder Include="src\components\Wrappers\" />
     <Folder Include="src\context\" />
     <Folder Include="src\images\" />
+    <Folder Include="src\utils\" />
     <Folder Include="src\pages\" />
-    <Folder Include="src\pages\charts\" />
-    <Folder Include="src\pages\charts\components\" />
-    <Folder Include="src\pages\dashboard\" />
-    <Folder Include="src\pages\dashboard\components\" />
-    <Folder Include="src\pages\dashboard\components\BigStat\" />
-    <Folder Include="src\pages\icons\" />
-    <Folder Include="src\pages\leaderboard\" />
-    <Folder Include="src\pages\gbadirectory\" />
-    <Folder Include="src\pages\home\" />
-    <Folder Include="src\pages\gbadao\" />
-    <Folder Include="src\pages\notifications\" />
-    <Folder Include="src\pages\tables\" />
-    <Folder Include="src\pages\typography\" />
-    <Folder Include="src\pages\wallet\" />
     <Folder Include="src\pages\tokentut\" />
+    <Folder Include="src\pages\wallet\" />
     <Folder Include="src\themes\" />
-    <Folder Include="src\pages\voting\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\app.tsx" />
+    <TypeScriptCompile Include="src\components\Dialogs\SendDialog.tsx" />
     <TypeScriptCompile Include="src\components\Dialogs\TextDialog.tsx" />
     <TypeScriptCompile Include="src\components\Header\Header.tsx" />
     <TypeScriptCompile Include="src\components\Header\styles.tsx" />
@@ -154,14 +123,13 @@
     <TypeScriptCompile Include="src\components\Widget\WidgetView.tsx" />
     <TypeScriptCompile Include="src\components\Wrappers\Wrappers.tsx" />
     <TypeScriptCompile Include="src\context\LayoutContext.tsx" />
-    <TypeScriptCompile Include="src\pages\gbadao\GBADAO.tsx" />
-    <TypeScriptCompile Include="src\pages\gbadirectory\GBADirectory.tsx" />
-    <TypeScriptCompile Include="src\pages\home\Home.tsx" />
     <TypeScriptCompile Include="src\pages\tokentut\TokenTutorial.tsx" />
     <TypeScriptCompile Include="src\pages\wallet\Wallet.tsx" />
     <TypeScriptCompile Include="src\themes\default.tsx" />
     <TypeScriptCompile Include="src\themes\index.tsx" />
-    <TypeScriptCompile Include="src\pages\voting\VotingDemo.tsx" />
+    <TypeScriptCompile Include="src\utils\EtherOps.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="svg.d.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
