@@ -28,30 +28,35 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendTokens = exports.web3 = void 0;
+exports.sendTokens = void 0;
 const config = require('../../src/config');
 const Web3 = require('web3');
-if (config.addrCurr != '') { // allow for blockchainless debugging
-    exports.web3 = new Web3(config.addrCurr);
-}
+var web3;
+const debug_1 = require("./debug");
 const gbaToken = __importStar(require("../../../build/contracts/GBAToken.json"));
-config.tokens.forEach((tName) => {
-    config.token[tName].contract = new exports.web3.eth.Contract(gbaToken.abi, config.token[tName].address, { data: gbaToken.bytecode });
-});
 let taskQ = []; // blockchain queue set-up
 let lastTx = -1;
 setInterval(checkQ, 1000);
+let inCheckQ = false;
 function checkQ() {
     return __awaiter(this, void 0, void 0, function* () {
-        if (taskQ.length === 0)
+        if (web3 == undefined || taskQ.length === 0 || inCheckQ)
             return;
-        let { account, tx } = taskQ.shift();
-        alert(account + ' - ' + JSON.stringify(tx));
-        let tcount = yield exports.web3.eth.getTransactionCount(account.address);
-        if (tcount === lastTx)
+        inCheckQ = true;
+        var account = yield getAcct();
+        var tx = taskQ.shift();
+        var tcount = yield web3.eth.getTransactionCount(account);
+        alert("tcount = " + tcount);
+        if (tcount === lastTx) {
+            inCheckQ = false;
             return;
+        }
+        alert("5");
         lastTx = tcount;
-        yield tx.send({ from: account.address, gas: 500000, nonce: tcount }).catch((e) => console.log("ethQ tx send ERROR: " + e));
+        alert("6");
+        yield tx.send({ from: account, gas: 500000, nonce: tcount }).catch((e) => alert(JSON.stringify(e, debug_1.replaceErrors)));
+        alert("7");
+        inCheckQ = false;
     });
 }
 ;
@@ -67,7 +72,7 @@ function getAcct() {
             alert("Metamask is either not installed or disabled");
             return '';
         }
-        var web3 = new Web3(window['ethereum']);
+        web3 = new Web3(window['ethereum']);
         window['ethereum'].enable();
         var accounts = yield web3.eth.getAccounts();
         if (accounts.length == 0) {
@@ -87,14 +92,16 @@ function sendTokens(token, blockchain, address, destBChain, destAddr, amount, me
         var account = yield getAcct();
         if (account == '')
             return;
-        if (account != 'address') {
+        if (account != address) {
             alert("You must switch to that account in Metamask in order to send from it!");
             return;
         }
+        if (config.token[token].contract == undefined)
+            config.token[token].contract = yield new web3.eth.Contract(gbaToken.abi, config.token[token].address, { data: gbaToken.bytecode });
         if (blockchain === destBChain) {
-            alert("GBA Hub ==> GBA Hub transfers will be available again on Monday");
-            var tx = config.tokens[token].contract.methods.memoTransferFrom(account, destAddr, amount, memo);
-            // taskQ.push({ account, tx })
+            var qty = amount * (Math.pow(10, config.token[token].decimals));
+            taskQ.push(config.token['PLAY'].contract.methods.approve(account, qty));
+            taskQ.push(config.token[token].contract.methods.memoTransferFrom(account, destAddr, qty, memo));
         }
         else {
             alert("GBA Hub ==> Hive transfers will be available Monday");

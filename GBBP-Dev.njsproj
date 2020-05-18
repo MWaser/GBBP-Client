@@ -127,6 +127,9 @@
     <TypeScriptCompile Include="src\pages\wallet\Wallet.tsx" />
     <TypeScriptCompile Include="src\themes\default.tsx" />
     <TypeScriptCompile Include="src\themes\index.tsx" />
+    <TypeScriptCompile Include="src\utils\debug.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\utils\EtherOps.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
