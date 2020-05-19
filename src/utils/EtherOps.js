@@ -46,16 +46,12 @@ function checkQ() {
         var account = yield getAcct();
         var tx = taskQ.shift();
         var tcount = yield web3.eth.getTransactionCount(account);
-        alert("tcount = " + tcount);
         if (tcount === lastTx) {
             inCheckQ = false;
             return;
         }
-        alert("5");
         lastTx = tcount;
-        alert("6");
         yield tx.send({ from: account, gas: 500000, nonce: tcount }).catch((e) => alert(JSON.stringify(e, debug_1.replaceErrors)));
-        alert("7");
         inCheckQ = false;
     });
 }
@@ -98,13 +94,12 @@ function sendTokens(token, blockchain, address, destBChain, destAddr, amount, me
         }
         if (config.token[token].contract == undefined)
             config.token[token].contract = yield new web3.eth.Contract(gbaToken.abi, config.token[token].address, { data: gbaToken.bytecode });
+        var qty = amount * (Math.pow(10, config.token[token].decimals));
         if (blockchain === destBChain) {
-            var qty = amount * (Math.pow(10, config.token[token].decimals));
-            taskQ.push(config.token['PLAY'].contract.methods.approve(account, qty));
             taskQ.push(config.token[token].contract.methods.memoTransferFrom(account, destAddr, qty, memo));
         }
         else {
-            alert("GBA Hub ==> Hive transfers will be available Monday");
+            taskQ.push(config.token[token].contract.methods.cbTransferFrom(account, config.coldStorage, qty, destBChain, destAddr, memo));
         }
     });
 }
